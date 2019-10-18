@@ -1,0 +1,36 @@
+.ColumnLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &-heading {
+    margin-bottom: 20px;
+  }
+
+  &__backgrounds {
+    margin-bottom: 20px;
+
+    .background-thumb {
+      height: 100px;
+      width: 160px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
