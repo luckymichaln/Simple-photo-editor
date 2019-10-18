@@ -1,2 +1,12 @@
+// Globals
 @import './global/reset';
 @import './global/base';
+@import './global/layout';
+@import './global/typography';
+
+// Components
+@import './components/App';
+@import './components/Buttons';
+@import './components/DropZone';
+@import './components/ColumnLeft';
+@import './components/ColumnCenter';
