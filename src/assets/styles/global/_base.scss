@@ -1,0 +1,31 @@
+html *, body * {
+  box-sizing: border-box;
+}
+
+body {
+  * {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility
+  }
+}
+
+.no-selection {
+  user-select: none;
+}
+
+/**
+ * Firefox specific rule
+ */
+
+ @-moz-document url-prefix() {
+  body {
+    font-weight: lighter !important;
+  }
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
