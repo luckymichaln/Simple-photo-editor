@@ -1,0 +1,17 @@
+.LogoPicker {
+  margin-bottom: 30px;
+
+  &__heading {
+    margin-bottom: 20px;
+  }
+
+  &__thumbs {
+    display: flex;
+
+    .logotype-thumb {
+      height: 100px;
+      width: 100px;
+      cursor: pointer;
+    }
+  }
+}

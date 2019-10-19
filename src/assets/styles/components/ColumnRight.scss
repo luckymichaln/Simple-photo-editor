@@ -1,0 +1,19 @@
+.ColumnRight {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 20%;
+
+  &__actions {
+    display: flex;
+    margin-top: auto;
+
+    .btn {
+      width: 100%;
+
+      &:first-child {
+        margin-right: 20px;
+      }
+    }
+  }
+}

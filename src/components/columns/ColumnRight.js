@@ -5,9 +5,12 @@ import TextPicker from '../TextPicker';
 const ColumnRight = () => {
   return (
     <div className="ColumnRight">
-      <h2 className="ColumnRight__heading heading-small">Add logo</h2>
       <LogoPicker />
       <TextPicker />
+      <div className="ColumnRight__actions">
+        <button className="btn btn--small">Save</button>
+        <button className="btn btn--small">Load</button>
+      </div>
     </div>
   )
 }
