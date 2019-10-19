@@ -9,11 +9,13 @@ class App extends React.Component {
 
     this.state = {
       backgroundImage: null,
-      texts: []
+      nodes: [],
+      nodeZIndex: 1
     }
 
     this.setBackgroundImage = this.setBackgroundImage.bind(this);
-    this.setText = this.setText.bind(this);
+    this.addNode = this.addNode.bind(this);
+    this.removeNode = this.removeNode.bind(this);
   }
 
   setBackgroundImage(image) {
@@ -22,20 +24,51 @@ class App extends React.Component {
     });
   }
 
-  setText(text) {
-    this.setState((state) => ({
-      texts: state.texts.push(text)
+  increaseZIndex() {
+    this.setState(state => {
+      let index = ++state.nodeZIndex
+
+      return {
+        nodeZIndex: index
+      }
+    });
+
+    const { nodeZIndex } = this.state;
+    return nodeZIndex;
+  }
+
+  addNode = node => {
+    let { nodes } = this.state;
+
+    this.setState(state => {
+      const list = [...nodes, node];
+
+      return {
+        nodes: list
+      }
+    });
+  }
+
+  removeNode(node) {
+    this.setState(state => ({
+      // nodes: state.node.push(node)
+    }));
+  }
+
+  moveNode(node) {
+    this.setState(state => ({
+
     }));
   }
 
   render() {
-    const { backgroundImage } = this.state;
+    const { backgroundImage, nodes } = this.state;
 
     return (
       <main className="App-main container">
         <ColumnLeft onClick={this.setBackgroundImage} />
-        <ColumnCenter backgroundImageSrc={backgroundImage} />
-        <ColumnRight />
+        <ColumnCenter backgroundImageSrc={backgroundImage} nodes={nodes} />
+        <ColumnRight addNode={this.addNode} />
       </main>
     );
   }
