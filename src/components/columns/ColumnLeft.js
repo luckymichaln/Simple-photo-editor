@@ -1,8 +1,14 @@
 import React from 'react';
+import classNames from 'classnames';
 import importAll from '../../helpers/import-all';
 const list = importAll(require.context('../../assets/images/backgrounds', false, /\.(jpe?g)$/));
 
-const ColumnLeft = ({ onClick }) => {
+const ColumnLeft = ({ onClick, backgroundImage }) => {
+
+  const btnClass = classNames({
+    'btn': true,
+    'btn--delete': backgroundImage
+  })
 
   const ImagesList = list.map((src, key) => {
     return (
@@ -16,7 +22,7 @@ const ColumnLeft = ({ onClick }) => {
     <div className="ColumnLeft">
       <h2 className="ColumnLeft-heading heading-small">Select Background</h2>
       <div className="ColumnLeft__backgrounds">{ImagesList}</div>
-      <button className="btn btn--delete" onClick={() => onClick()}>Delete background</button>
+      <button className={btnClass} onClick={() => onClick()}>Delete background</button>
     </div>
   );
 }

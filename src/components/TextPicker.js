@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const TextPicker = ({ addNode }) => {
+  const [font, setFont] = useState('Arial');
+
   const textInput = React.createRef();
 
   const handleClick = () => {
-    addNode(textInput.current.value);
-    textInput.current.value = '';
+    if (textInput.current.value.length) {
+      addNode(textInput.current.value, 'text', font);
+      textInput.current.value = '';
+    }
   }
 
   const handleKeyPress = event => {
@@ -26,15 +30,15 @@ const TextPicker = ({ addNode }) => {
       />
       <div className="TextPicker__font-picker">
         <label htmlFor="arial">
-          <input type="radio" name="font-family" id="arial" defaultChecked />
+          <input type="radio" onClick={() => setFont('Arial')} name="font-family" id="arial" defaultChecked />
           Arial
         </label>
         <label htmlFor="roman">
-          <input type="radio" name="font-family" id="roman" />
+          <input type="radio" onClick={() => setFont('Times New Roman')} name="font-family" id="roman" />
           Times New Roman
         </label>
         <label htmlFor="sans">
-          <input type="radio" name="font-family" id="sans" />
+          <input type="radio" onClick={() => setFont('Open Sans')} name="font-family" id="sans" />
           Open Sans
         </label>
       </div>

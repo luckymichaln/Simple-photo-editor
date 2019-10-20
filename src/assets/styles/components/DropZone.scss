@@ -11,6 +11,32 @@
     background-image: url('./../../images/dropzone/empty_background.bmp');
   }
 
+  &--active {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 999;
+      background-color: rgba(95, 230, 124, 0.65);
+    }
+
+    &::after {
+      content: 'drop it here';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
+      text-transform: uppercase;
+      text-align: center;
+      z-index: 9990;
+      color: white;
+    }
+  }
+
   .Nodes {
     position: absolute;
     top: 0;
@@ -27,6 +53,26 @@
     font-size: 20px;
     cursor: pointer;
     user-select: none;
+
+    .btn {
+      display: none;
+    }
+
+    &.btn-visible .btn {
+      display: block;
+    }
+
+    &--image {
+      width: 100px;
+      height: 100px;
+    }
+
+    .btn {
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
 
 
