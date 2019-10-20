@@ -12,8 +12,17 @@ const ColumnLeft = ({ onClick, backgroundImage }) => {
 
   const ImagesList = list.map((src, key) => {
     return (
-      <div key={key} className="background-thumb" onClick={ev => onClick(list[key])} >
-        <img src={src} srcSet={`${src} 1x, ${src} 2x`} alt="Background thumbnail" />
+      <div
+        key={key}
+        className="background-thumb"
+        onClick={ev => onClick(list[key])}
+      >
+        <img
+          src={src}
+          srcSet={`${src} 1x, ${src} 2x`}
+          alt="Background thumbnail"
+          draggable="false"
+        />
       </div>
     );
   });
