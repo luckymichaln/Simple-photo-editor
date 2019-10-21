@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { ReactComponent as Loader } from '../../assets/images/loader.svg';
 
-const ColumnLeft = ({ onClick, backgroundImage, backgroundsRandomArray }) => {
+const ColumnLeft = ({ onClick, backgroundImage, backgroundsRandomArray, shuffleBackgrounds }) => {
   const btnClass = classNames({
     'btn': true,
     'btn--delete': backgroundImage
@@ -29,16 +29,25 @@ const ColumnLeft = ({ onClick, backgroundImage, backgroundsRandomArray }) => {
     <div className="ColumnLeft">
       <h2 className="ColumnLeft-heading heading-small">Select Background</h2>
       <div className="ColumnLeft__backgrounds">
-        {!ImagesList && <div className="backgrounds-loader"><span>Loading images</span><Loader /></div>}
+        {!ImagesList && <div className="backgrounds-loader"><span>loading images...</span><Loader /></div>}
         {ImagesList}
       </div>
-      <button
-        className={btnClass}
-        disabled={!backgroundImage}
-        onClick={() => onClick()}
-      >
-        Delete background
-      </button>
+      <div className="ColumnLeft__actions">
+        <button
+          className="btn"
+          disabled={!backgroundsRandomArray}
+          onClick={() => shuffleBackgrounds()}
+        >
+          Change images
+        </button>
+        <button
+          className={btnClass}
+          disabled={!backgroundImage}
+          onClick={() => onClick()}
+        >
+          Delete background
+        </button>
+      </div>
     </div>
   );
 }

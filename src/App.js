@@ -22,6 +22,7 @@ class App extends React.Component {
 
     this.setBackgroundImage = this.setBackgroundImage.bind(this);
     this.getNodeDimentions = this.getNodeDimentions.bind(this);
+    this.shuffleBackgrounds = this.shuffleBackgrounds.bind(this);
     this.addNode = this.addNode.bind(this);
     this.moveNode = this.moveNode.bind(this);
     this.deleteNode = this.deleteNode.bind(this);
@@ -30,30 +31,11 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
-    let backgroundsRandomArray = []
-    try {
-      for (let index = 0; index < 4; index++) {
-        let response = await fetch('https://source.unsplash.com/random')
-        backgroundsRandomArray.push(response.url)
-
-        // API response is too slow and returns the same images.
-        // Search as long as each image in new Array is different.
-        if (backgroundsRandomArray.length > 0) {
-          while (backgroundsRandomArray[index] === response.url) {
-            response = await fetch('https://source.unsplash.com/random')
-          }
-        }
-      }
-    } catch (err) {
-      console.error(err)
-    }
-
-
+    this.shuffleBackgrounds()
     const dz = document.getElementById('DropZoneField');
 
     this.setState({
       dropZoneNode: dz,
-      backgroundsRandomArray
     });
 
     document.addEventListener('drag', function (event) { }, false);
@@ -89,6 +71,35 @@ class App extends React.Component {
 
       this.setDropZoneActive(false)
     }, false);
+  }
+
+  async shuffleBackgrounds() {
+    this.setState({
+      backgroundsRandomArray: null
+    });
+
+    let backgroundsRandomArray = []
+
+    try {
+      for (let index = 0; index < 4; index++) {
+        let response = await fetch('https://source.unsplash.com/random')
+        backgroundsRandomArray.push(response.url)
+
+        // API response is too slow and returns the same images.
+        // Search as long as each image in new Array is different.
+        if (backgroundsRandomArray.length > 0) {
+          while (backgroundsRandomArray[index] === response.url) {
+            response = await fetch('https://source.unsplash.com/random')
+          }
+        }
+      }
+    } catch (err) {
+      console.error(err)
+    }
+
+    this.setState({
+      backgroundsRandomArray
+    });
   }
 
   setDropZoneActive(isActive) {
@@ -202,6 +213,7 @@ class App extends React.Component {
           onClick={this.setBackgroundImage}
           backgroundImage={backgroundImage}
           backgroundsRandomArray={backgroundsRandomArray}
+          shuffleBackgrounds={this.shuffleBackgrounds}
         />
         <ColumnCenter
           backgroundImageSrc={backgroundImage}
