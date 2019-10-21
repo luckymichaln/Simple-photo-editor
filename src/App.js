@@ -103,11 +103,11 @@ class App extends React.Component {
     });
   }
 
-  addNode = (value, type, fontFamily) => {
+  addNode = (value, type, fontFamily, fontStyle) => {
     let { nodes } = this.state;
 
     this.setState(() => {
-      const list = [...nodes, { value, type, fontFamily, position: { x: null, y: null } }];
+      const list = [...nodes, { value, type, fontFamily, fontStyle }];
 
       return {
         nodes: list
