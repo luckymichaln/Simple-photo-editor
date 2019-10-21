@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { ReactComponent as Loader } from '../../assets/images/loader.svg';
 
-const ColumnLeft = ({ onClick, backgroundImage, backgroundsRandomArray, shuffleBackgrounds }) => {
+const ColumnLeft = ({ setBackgroundImage, backgroundImage, backgroundsRandomArray, shuffleBackgrounds }) => {
   const btnClass = classNames({
     'btn': true,
     'btn--delete': backgroundImage
@@ -13,7 +13,7 @@ const ColumnLeft = ({ onClick, backgroundImage, backgroundsRandomArray, shuffleB
       <div
         key={key}
         className="background-thumb"
-        onClick={ev => onClick(backgroundsRandomArray[key])}
+        onClick={ev => setBackgroundImage(backgroundsRandomArray[key])}
       >
         <img
           src={src}
@@ -43,7 +43,7 @@ const ColumnLeft = ({ onClick, backgroundImage, backgroundsRandomArray, shuffleB
         <button
           className={btnClass}
           disabled={!backgroundImage}
-          onClick={() => onClick()}
+          onClick={() => setBackgroundImage()}
         >
           Delete background
         </button>

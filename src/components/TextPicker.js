@@ -5,24 +5,24 @@ const TextPicker = ({ addNode }) => {
   const [font, setFont] = useState('Arial');
   const [style, setStyle] = useState('unset');
   const [color, setColor] = useState('#000');
-  const [colorPickerVisible, toggleColorPicker] = useState(false);
+  const [colorPickerVisible, toggleSetColorPicker] = useState(false);
 
   const textInput = React.createRef();
 
-  const handleClick = () => {
+  const handleAddNewNode = () => {
     if (textInput.current.value.length) {
       addNode(textInput.current.value, 'text', font, style, color);
       textInput.current.value = '';
     }
   }
 
-  const handleSetColor = (color) => {
+  const handleSetColor = color => {
     setColor(color.hex)
   }
 
   const handleKeyPress = event => {
     if (event.key === 'Enter') {
-      handleClick();
+      handleAddNewNode();
     }
   }
 
@@ -73,7 +73,7 @@ const TextPicker = ({ addNode }) => {
         <h3 className="TextPicker__heading heading--small">Choose text color</h3>
         <button
           className="btn"
-          onClick={() => toggleColorPicker(!colorPickerVisible)}
+          onClick={() => toggleSetColorPicker(!colorPickerVisible)}
         >
           {colorPickerVisible ? 'Close color picker' : 'Open color picker'}
         </button>
@@ -84,7 +84,7 @@ const TextPicker = ({ addNode }) => {
           />
         }
       </div>
-      <button className="btn btn--small" onClick={() => handleClick()}>Add text</button>
+      <button className="btn btn--small" onClick={() => handleAddNewNode()}>Add text</button>
     </div>
   )
 }

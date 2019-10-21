@@ -4,7 +4,7 @@ import domtoimage from 'dom-to-image';
 
 const ColumnCenter = ({ backgroundImageSrc, nodes, moveNode, deleteNode, getNodeDimentions, dropZoneNode, dropZoneActive }) => {
 
-  const handleClick = () => {
+  const handleSaveImage = () => {
     domtoimage.toJpeg(dropZoneNode, { quality: 1 })
       .then(function (dataUrl) {
         var link = document.createElement('a');
@@ -25,7 +25,7 @@ const ColumnCenter = ({ backgroundImageSrc, nodes, moveNode, deleteNode, getNode
         dropZoneActive={dropZoneActive}
         backgroundImageSrc={backgroundImageSrc}
       />
-      <button className="btn" onClick={() => handleClick()} disabled={!backgroundImageSrc && !nodes.length}> Download as image</button>
+      <button className="btn" onClick={() => handleSaveImage()} disabled={!backgroundImageSrc && !nodes.length}> Download as image</button>
     </div>
   )
 }

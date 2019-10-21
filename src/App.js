@@ -31,17 +31,15 @@ class App extends React.Component {
     this.showDeleteBtn = this.showDeleteBtn.bind(this);
   }
 
-
-
   async componentDidMount() {
-    this.shuffleBackgrounds()
+    await this.shuffleBackgrounds()
     const dz = document.getElementById('DropZoneField');
 
     this.setState({
       dropZoneNode: dz,
     });
 
-    document.addEventListener('drag', function (event) { }, false);
+    document.addEventListener('drag', ev => { }, false);
 
     document.addEventListener('dragstart', ev => {
       this.setState({
@@ -143,7 +141,12 @@ class App extends React.Component {
   }
 
   deleteNode(nodeIndex) {
+    var updatedNodes = [...this.state.nodes]
+    updatedNodes.splice(nodeIndex, 1)
 
+    this.setState(() => ({
+      nodes: updatedNodes
+    }));
   }
 
   showDeleteBtn(node) {
@@ -202,7 +205,7 @@ class App extends React.Component {
     return (
       <main className="App-main container">
         <ColumnLeft
-          onClick={this.setBackgroundImage}
+          setBackgroundImage={this.setBackgroundImage}
           backgroundImage={backgroundImage}
           backgroundsRandomArray={backgroundsRandomArray}
           shuffleBackgrounds={this.shuffleBackgrounds}
