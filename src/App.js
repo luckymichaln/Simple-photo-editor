@@ -29,11 +29,31 @@ class App extends React.Component {
     this.showDeleteBtn = this.showDeleteBtn.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    let backgroundsRandomArray = []
+    try {
+      for (let index = 0; index < 4; index++) {
+        let response = await fetch('https://source.unsplash.com/random')
+        backgroundsRandomArray.push(response.url)
+
+        // API response is too slow and returns the same images.
+        // Search as long as each image in new Array is different.
+        if (backgroundsRandomArray.length > 0) {
+          while (backgroundsRandomArray[index] === response.url) {
+            response = await fetch('https://source.unsplash.com/random')
+          }
+        }
+      }
+    } catch (err) {
+      console.error(err)
+    }
+
+
     const dz = document.getElementById('DropZoneField');
 
     this.setState({
-      dropZoneNode: dz
+      dropZoneNode: dz,
+      backgroundsRandomArray
     });
 
     document.addEventListener('drag', function (event) { }, false);
@@ -174,13 +194,14 @@ class App extends React.Component {
   }
 
   render() {
-    const { backgroundImage, nodes, dropZoneActive, dropZoneNode } = this.state;
+    const { backgroundImage, nodes, dropZoneActive, dropZoneNode, backgroundsRandomArray } = this.state;
 
     return (
       <main className="App-main container">
         <ColumnLeft
           onClick={this.setBackgroundImage}
           backgroundImage={backgroundImage}
+          backgroundsRandomArray={backgroundsRandomArray}
         />
         <ColumnCenter
           backgroundImageSrc={backgroundImage}

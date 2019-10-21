@@ -1,21 +1,19 @@
 import React from 'react';
 import classNames from 'classnames';
-import importAll from '../../helpers/import-all';
-const list = importAll(require.context('../../assets/images/backgrounds', false, /\.(jpe?g)$/));
+import { ReactComponent as Loader } from '../../assets/images/loader.svg';
 
-const ColumnLeft = ({ onClick, backgroundImage }) => {
-
+const ColumnLeft = ({ onClick, backgroundImage, backgroundsRandomArray }) => {
   const btnClass = classNames({
     'btn': true,
     'btn--delete': backgroundImage
   })
 
-  const ImagesList = list.map((src, key) => {
+  const ImagesList = backgroundsRandomArray ? backgroundsRandomArray.map((src, key) => {
     return (
       <div
         key={key}
         className="background-thumb"
-        onClick={ev => onClick(list[key])}
+        onClick={ev => onClick(backgroundsRandomArray[key])}
       >
         <img
           src={src}
@@ -25,12 +23,15 @@ const ColumnLeft = ({ onClick, backgroundImage }) => {
         />
       </div>
     );
-  });
+  }) : null;
 
   return (
     <div className="ColumnLeft">
       <h2 className="ColumnLeft-heading heading-small">Select Background</h2>
-      <div className="ColumnLeft__backgrounds">{ImagesList}</div>
+      <div className="ColumnLeft__backgrounds">
+        {!ImagesList && <div className="backgrounds-loader"><span>Loading images</span><Loader /></div>}
+        {ImagesList}
+      </div>
       <button
         className={btnClass}
         disabled={!backgroundImage}

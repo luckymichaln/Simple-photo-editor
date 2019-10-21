@@ -10,7 +10,32 @@
   }
 
   &__backgrounds {
+    display: flex;
+    flex-direction: column;
+    min-height: 445px;
     margin-bottom: 20px;
+
+    .backgrounds-loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: auto 0;
+
+      span {
+        display: block;
+        width: 50%;
+        margin-bottom: 10px;
+        text-align: center;
+        line-height: 1.3;
+        color: #b9b9b9;
+      }
+
+      svg {
+        height: 30px;
+        width: 30px;
+      }
+    }
 
     .background-thumb {
       height: 100px;
