@@ -192,7 +192,6 @@ class App extends React.Component {
           getNodeDimentions={this.getNodeDimentions}
           dropZoneActive={dropZoneActive}
           dropZoneNode={dropZoneNode}
-          showDeleteBtn={this.showDeleteBtn}
         />
         <ColumnRight
           addNode={this.addNode}
