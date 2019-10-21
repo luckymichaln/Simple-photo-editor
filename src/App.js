@@ -2,6 +2,7 @@ import React from 'react';
 import ColumnLeft from './components/columns/ColumnLeft';
 import ColumnCenter from './components/columns/ColumnCenter';
 import ColumnRight from './components/columns/ColumnRight';
+import getRandomPicUrl from './helpers/get-random-pics';
 
 class App extends React.Component {
   constructor(props) {
@@ -29,6 +30,8 @@ class App extends React.Component {
     this.setDropZoneActive = this.setDropZoneActive.bind(this);
     this.showDeleteBtn = this.showDeleteBtn.bind(this);
   }
+
+
 
   async componentDidMount() {
     this.shuffleBackgrounds()
@@ -81,16 +84,16 @@ class App extends React.Component {
     let backgroundsRandomArray = []
 
     try {
-      for (let index = 0; index < 4; index++) {
-        let response = await fetch('https://source.unsplash.com/random')
-        backgroundsRandomArray.push(response.url)
-
-        // API response is too slow and returns the same images.
-        // Search as long as each image in new Array is different.
-        if (backgroundsRandomArray.length > 0) {
-          while (backgroundsRandomArray[index] === response.url) {
-            response = await fetch('https://source.unsplash.com/random')
-          }
+      // c is a safety fuse
+      let c = 0
+      while (true) {
+        let response = await fetch(getRandomPicUrl())
+        c += 1
+        if (!backgroundsRandomArray.includes(response.url)) {
+          backgroundsRandomArray.push(response.url)
+        }
+        if (backgroundsRandomArray.length === 4 || c > 200) {
+          break
         }
       }
     } catch (err) {
@@ -140,18 +143,7 @@ class App extends React.Component {
   }
 
   deleteNode(nodeIndex) {
-    let { nodes } = this.state;
-    const updatedNodes = [];
 
-    for (var i = 0; i < nodes.length; i++) {
-      if (i !== nodeIndex) {
-        updatedNodes.push(nodes[i]);
-      }
-    }
-
-    this.setState(() => ({
-      nodes: updatedNodes
-    }));
   }
 
   showDeleteBtn(node) {

@@ -32,7 +32,7 @@ const DropZone = ({ backgroundImageSrc, nodes, moveNode, deleteNode, getNodeDime
             color: `${node.fontColor}`
           }}
         >
-          {node.value}
+          {node.value} {key}
           <button
             className="btn btn--delete"
             onClick={() => deleteNode(key)}
