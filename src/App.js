@@ -31,8 +31,8 @@ class App extends React.Component {
     this.showDeleteBtn = this.showDeleteBtn.bind(this);
   }
 
-  async componentDidMount() {
-    await this.shuffleBackgrounds()
+  componentDidMount() {
+    this.shuffleBackgrounds()
     const dz = document.getElementById('DropZoneField');
 
     this.setState({
