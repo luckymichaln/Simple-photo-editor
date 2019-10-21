@@ -106,8 +106,6 @@ class App extends React.Component {
         activeNode: { ...state.activeNode, dimenstions }
       }
     });
-
-    // console.log(this.state.activeNode)
   }
 
   deleteNode(nodeIndex) {
@@ -129,7 +127,7 @@ class App extends React.Component {
     node.classList.toggle('btn-visible');
   }
 
-  moveNode = (node, index) => {
+  moveNode = (node) => {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0, buttonDeleteVisibility = false;
 
     const dragMouseDown = ev => {
@@ -147,7 +145,7 @@ class App extends React.Component {
     }
 
     const elementDrag = ev => {
-      // ev = ev || window.event;
+      ev = ev || window.event;
       ev.preventDefault();
 
       // calculate the new cursor position:
@@ -196,6 +194,8 @@ class App extends React.Component {
         <ColumnRight
           addNode={this.addNode}
           getNodeDimentions={this.getNodeDimentions}
+          nodes={nodes}
+          backgroundImageSrc={backgroundImage}
         />
       </main>
     );

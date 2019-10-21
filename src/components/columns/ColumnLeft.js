@@ -31,7 +31,13 @@ const ColumnLeft = ({ onClick, backgroundImage }) => {
     <div className="ColumnLeft">
       <h2 className="ColumnLeft-heading heading-small">Select Background</h2>
       <div className="ColumnLeft__backgrounds">{ImagesList}</div>
-      <button className={btnClass} onClick={() => onClick()}>Delete background</button>
+      <button
+        className={btnClass}
+        disabled={!backgroundImage}
+        onClick={() => onClick()}
+      >
+        Delete background
+      </button>
     </div>
   );
 }
