@@ -12,10 +12,8 @@ class App extends React.Component {
       backgroundImage: null,
       nodes: [],
       activeNode: {
-        position: {
-          x: null,
-          y: null
-        }
+        x: null,
+        y: null
       },
       draggedNode: null,
       dropZoneActive: false
@@ -153,7 +151,7 @@ class App extends React.Component {
     node.classList.toggle('btn-visible');
   }
 
-  moveNode = (node) => {
+  moveNode = (node, key) => {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0, buttonDeleteVisibility = false;
 
     const dragMouseDown = ev => {
@@ -183,6 +181,10 @@ class App extends React.Component {
       // set the element's new position:
       node.style.top = (node.offsetTop - pos2) + 'px';
       node.style.left = (node.offsetLeft - pos1) + 'px';
+
+      this.setState(() => ({
+        activeNode: { x: node.style.left, y: node.style.top }
+      }))
 
       buttonDeleteVisibility = false;
     }
