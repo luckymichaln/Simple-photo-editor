@@ -11,7 +11,7 @@ const DropZone = ({ backgroundImageSrc, nodes, moveNode, deleteNode, getNodeDime
 
   const handleMouseDown = (nodeRef, key) => {
     getNodeDimentions(nodeRef.current)
-    moveNode(nodeRef.current, key)
+    moveNode(nodeRef.current)
   }
 
   const DropZoneNode = nodes ? nodes.map((node, key) => {
@@ -23,7 +23,7 @@ const DropZone = ({ backgroundImageSrc, nodes, moveNode, deleteNode, getNodeDime
           key={key}
           ref={nodeRef}
           className="Node Node--text"
-          onMouseDown={() => handleMouseDown(nodeRef, key)}
+          onMouseDown={() => handleMouseDown(nodeRef)}
           style={{
             fontFamily: `${node.fontFamily}`,
             fontWeight: `${node.fontStyle}`,
@@ -45,7 +45,7 @@ const DropZone = ({ backgroundImageSrc, nodes, moveNode, deleteNode, getNodeDime
           key={key}
           ref={nodeRef}
           className="Node Node--image"
-          onMouseDown={() => handleMouseDown(nodeRef, key)}
+          onMouseDown={() => handleMouseDown(nodeRef)}
         >
           <img
             draggable="false"
