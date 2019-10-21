@@ -10,7 +10,6 @@ class App extends React.Component {
     this.state = {
       backgroundImage: null,
       nodes: [],
-      activeZIndex: 1,
       activeNode: {
         position: {
           x: null,
@@ -18,8 +17,7 @@ class App extends React.Component {
         }
       },
       draggedNode: null,
-      dropZone: null,
-      dropZoneActive: false,
+      dropZoneActive: false
     }
 
     this.setBackgroundImage = this.setBackgroundImage.bind(this);
@@ -31,13 +29,13 @@ class App extends React.Component {
     this.showDeleteBtn = this.showDeleteBtn.bind(this);
   }
 
-  setDropZoneActive(isActive) {
-    this.setState({
-      dropZoneActive: isActive
-    })
-  }
-
   componentDidMount() {
+    const dz = document.getElementById('DropZoneField');
+
+    this.setState({
+      dropZoneNode: dz
+    });
+
     document.addEventListener('drag', function (event) { }, false);
 
     document.addEventListener('dragstart', ev => {
@@ -73,30 +71,23 @@ class App extends React.Component {
     }, false);
   }
 
+  setDropZoneActive(isActive) {
+    this.setState({
+      dropZoneActive: isActive
+    })
+  }
+
   setBackgroundImage(image) {
     this.setState({
       backgroundImage: image || null
     });
   }
 
-  increaseZIndex() {
-    this.setState(state => {
-      let index = ++state.activeZIndex
-
-      return {
-        activeZIndex: index
-      }
-    });
-
-    const { activeZIndex } = this.state;
-    return activeZIndex;
-  }
-
   addNode = (value, type, fontFamily) => {
     let { nodes } = this.state;
 
     this.setState(() => {
-      const list = [...nodes, { value, type, fontFamily }];
+      const list = [...nodes, { value, type, fontFamily, position: { x: null, y: null } }];
 
       return {
         nodes: list
@@ -116,11 +107,7 @@ class App extends React.Component {
       }
     });
 
-    console.log(this.state.activeNode)
-  }
-
-  getNodePosition = node => {
-    console.dir(node, 'node')
+    // console.log(this.state.activeNode)
   }
 
   deleteNode(nodeIndex) {
@@ -142,48 +129,54 @@ class App extends React.Component {
     node.classList.toggle('btn-visible');
   }
 
-  moveNode = (node, ev, index, ) => {
-    console.log(node, 'node')
-    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    node.onmousedown = dragMouseDown;
+  moveNode = (node, index) => {
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0, buttonDeleteVisibility = false;
 
-    function dragMouseDown(e) {
-      e = e || window.event;
-      e.preventDefault();
+    const dragMouseDown = ev => {
+      ev = ev || window.event;
+      ev.preventDefault();
 
       // get the mouse cursor position at startup:
-      pos3 = e.clientX;
-      pos4 = e.clientY;
+      pos3 = ev.clientX;
+      pos4 = ev.clientY;
       document.onmouseup = closeDragElement;
 
       // call a function whenever the cursor moves:
       document.onmousemove = elementDrag;
+      buttonDeleteVisibility = true;
     }
 
-    function elementDrag(e) {
-      e = e || window.event;
-      e.preventDefault();
+    const elementDrag = ev => {
+      // ev = ev || window.event;
+      ev.preventDefault();
 
       // calculate the new cursor position:
-      pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
-      pos3 = e.clientX;
-      pos4 = e.clientY;
+      pos1 = pos3 - ev.clientX;
+      pos2 = pos4 - ev.clientY;
+      pos3 = ev.clientX;
+      pos4 = ev.clientY;
 
       // set the element's new position:
-      node.style.top = (node.offsetTop - pos2) + "px";
-      node.style.left = (node.offsetLeft - pos1) + "px";
+      node.style.top = (node.offsetTop - pos2) + 'px';
+      node.style.left = (node.offsetLeft - pos1) + 'px';
+
+      buttonDeleteVisibility = false;
     }
 
-    function closeDragElement() {
+    const closeDragElement = () => {
       /* stop moving when mouse button is released:*/
       document.onmouseup = null;
       document.onmousemove = null;
+
+      if (buttonDeleteVisibility) {
+        this.showDeleteBtn(node)
+      }
     }
+    node.onmousedown = dragMouseDown;
   }
 
   render() {
-    const { backgroundImage, nodes, dropZoneActive } = this.state;
+    const { backgroundImage, nodes, dropZoneActive, dropZoneNode } = this.state;
 
     return (
       <main className="App-main container">
@@ -198,6 +191,7 @@ class App extends React.Component {
           deleteNode={this.deleteNode}
           getNodeDimentions={this.getNodeDimentions}
           dropZoneActive={dropZoneActive}
+          dropZoneNode={dropZoneNode}
           showDeleteBtn={this.showDeleteBtn}
         />
         <ColumnRight
