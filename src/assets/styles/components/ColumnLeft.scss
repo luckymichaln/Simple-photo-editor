@@ -25,7 +25,8 @@
   &__backgrounds {
     display: flex;
     flex-direction: column;
-    min-height: 445px;
+    justify-content: center;
+    min-height: 514px;
     margin-bottom: 20px;
 
     .backgrounds-loader {
