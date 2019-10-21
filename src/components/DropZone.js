@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-const DropZone = ({ backgroundImageSrc, nodes, moveNode, deleteNode, getNodeDimentions, dropZoneActive, showDeleteBtn }) => {
+const DropZone = ({ backgroundImageSrc, nodes, moveNode, deleteNode, getNodeDimentions, dropZoneActive }) => {
 
   const dropZoneClasses = classNames({
     'DropZone': true,
@@ -10,19 +10,8 @@ const DropZone = ({ backgroundImageSrc, nodes, moveNode, deleteNode, getNodeDime
   });
 
   const handleMouseDown = (key, nodeRef) => {
-    console.log(nodeRef.current, 'nodeRef')
     getNodeDimentions(nodeRef.current)
-    moveNode(nodeRef.current)
-  }
-
-  const handleMouseUp = (ev, key) => {
-    // console.log(ev, 'ev')
-    // document.removeEventListener('mousemove', moveNode(key))
-  }
-
-  const handleMouseMove = ev => {
-    // ev.movementX(ev)
-    console.log(ev, 'evdfdfds')
+    moveNode(nodeRef.current, key)
   }
 
   const DropZoneNode = nodes ? nodes.map((node, key) => {
@@ -35,13 +24,7 @@ const DropZone = ({ backgroundImageSrc, nodes, moveNode, deleteNode, getNodeDime
           ref={nodeRef}
           className="Node Node--text"
           onMouseDown={() => handleMouseDown(key, nodeRef)}
-          onMouseMove={ev => handleMouseMove(ev)}
-          onMouseUp={ev => {
-            handleMouseUp(ev, key)
-            console.log('up')
-          }}
-          onClick={() => showDeleteBtn(nodeRef.current)}
-          style={{ 'fontFamily': `${node.fontFamily}` }}
+          style={{ fontFamily: `${node.fontFamily}`, top: `${node.position.y} || '50%'`, left: `${node.position.x} || '50%'` }}
         >
           {node.value}
           <button
@@ -57,11 +40,6 @@ const DropZone = ({ backgroundImageSrc, nodes, moveNode, deleteNode, getNodeDime
           ref={nodeRef}
           className="Node Node--image"
           onMouseDown={() => handleMouseDown(key, nodeRef)}
-          onMouseUp={() => {
-            handleMouseUp(key)
-            console.log('up')
-          }}
-          onClick={() => showDeleteBtn(nodeRef.current)}
         >
           <img
             draggable="false"
@@ -81,9 +59,7 @@ const DropZone = ({ backgroundImageSrc, nodes, moveNode, deleteNode, getNodeDime
   return (
     <div className={dropZoneClasses} id="DropZoneField">
       {backgroundImageSrc &&
-        <div className="DropZone__background-image">
-          <img src={backgroundImageSrc} srcSet={`${backgroundImageSrc} 1x, ${backgroundImageSrc} 2x`} alt="Simple Editor background" />
-        </div>
+        <div className="DropZone__background-image" style={{ backgroundImage: `url(${backgroundImageSrc})` }} />
       }
       {nodes &&
         <ul className="Nodes">
