@@ -1,17 +1,23 @@
 import React, { useState } from 'react'
+import { SketchPicker } from 'react-color';
 
 const TextPicker = ({ addNode }) => {
   const [font, setFont] = useState('Arial');
   const [style, setStyle] = useState('unset');
+  const [color, setColor] = useState('#000');
+  const [colorPickerVisible, toggleColorPicker] = useState(false);
 
   const textInput = React.createRef();
 
   const handleClick = () => {
-    console.log(style, 'style')
     if (textInput.current.value.length) {
-      addNode(textInput.current.value, 'text', font, style);
+      addNode(textInput.current.value, 'text', font, style, color);
       textInput.current.value = '';
     }
+  }
+
+  const handleSetColor = (color) => {
+    setColor(color.hex)
   }
 
   const handleKeyPress = event => {
@@ -62,6 +68,21 @@ const TextPicker = ({ addNode }) => {
           <input type="radio" onClick={() => setStyle('underline')} name="font-styling" id="style-underline" />
           Underline
         </label>
+      </div>
+      <div className="TextPicker__color-picker">
+        <h3 className="TextPicker__heading heading--small">Choose text color</h3>
+        <button
+          className="btn"
+          onClick={() => toggleColorPicker(!colorPickerVisible)}
+        >
+          {colorPickerVisible ? 'Close color picker' : 'Open color picker'}
+        </button>
+        {colorPickerVisible &&
+          <SketchPicker
+            color={color}
+            onChangeComplete={(color) => handleSetColor(color)}
+          />
+        }
       </div>
       <button className="btn btn--small" onClick={() => handleClick()}>Add text</button>
     </div>

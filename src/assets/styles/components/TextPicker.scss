@@ -46,6 +46,25 @@
     }
   }
 
+  &__color-picker {
+    position: relative;
+
+    .TextPicker__heading {
+      margin-bottom: 10px;
+    }
+
+    .sketch-picker {
+      position: absolute;
+      bottom: 130%;
+      width: 94% !important;
+    }
+
+    .btn {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+
   &-slogan-input {
     width: 100%;
     padding: 5px 10px 7px;

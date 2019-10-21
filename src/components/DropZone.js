@@ -17,25 +17,6 @@ const DropZone = ({ backgroundImageSrc, nodes, moveNode, deleteNode, getNodeDime
   const DropZoneNode = nodes ? nodes.map((node, key) => {
     let nodeRef = React.createRef();
 
-    console.log(node)
-
-    const styleLogic = (() => {
-      switch (node.fontStyle) {
-        case 'bold':
-          return 'FontWeight'
-        case 'italic':
-          return 'FontStyle'
-        case 'underline':
-          return 'TextDecoration'
-        default:
-          break;
-      }
-    })();
-
-    // const style = styleLogic()
-
-    console.log(styleLogic)
-
     return (
       node.type === 'text' ?
         <li
@@ -48,6 +29,7 @@ const DropZone = ({ backgroundImageSrc, nodes, moveNode, deleteNode, getNodeDime
             fontWeight: `${node.fontStyle}`,
             fontStyle: `${node.fontStyle}`,
             textDecoration: `${node.fontStyle}`,
+            color: `${node.fontColor}`
           }}
         >
           {node.value}
